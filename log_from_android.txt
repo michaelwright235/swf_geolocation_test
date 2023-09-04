@@ -1,0 +1,22 @@
+When a permission is granted:
+
+init
+geo.setRequestedUpdateInterval(7000)
+locationAlwaysUsePermission(true)
+geo.locationAlwaysUsePermission() == false
+Geolocation.permissionStatus == granted
+[PermissionEvent type="permissionStatus" bubbles=false cancelable=false status="granted"]
+GeolocationEvent.UPDATE: [GeolocationEvent type="update" bubbles=false cancelable=false latitude=(private info) longitude=(private info) altitude=(private info) horizontalAccuracy=(private info) verticalAccuracy=(private info) speed=0 heading=NaN timestamp=14311]
+GeolocationEvent.UPDATE: [GeolocationEvent type="update" bubbles=false cancelable=false latitude=(private info) longitude=(private info) altitude=(private info) horizontalAccuracy=(private info) verticalAccuracy=(private info) speed=0 heading=NaN timestamp=24311]
+
+When a permission is denied:
+
+init
+Geolocation.isSupported == true
+Geolocation.permissionStatus == unknown
+geo.muted == false
+geo.setRequestedUpdateInterval(7000)
+locationAlwaysUsePermission(true)
+geo.locationAlwaysUsePermission() == false
+Geolocation.permissionStatus == denied
+[PermissionEvent type="permissionStatus" bubbles=false cancelable=false status="denied"]

@@ -6,6 +6,7 @@
     import flash.events.StatusEvent;
 	import flash.events.Event;
 	import flash.events.PermissionEvent;
+	import flash.permissions.PermissionStatus;
     import flash.sensors.Geolocation;
     import flash.text.TextField;
     import flash.text.TextFormat;
@@ -29,12 +30,10 @@
                 geo = new Geolocation();
 				logNtrace("geo.muted == " + geo.muted.toString());
 				logNtrace("geo.setRequestedUpdateInterval(" + interval + ")");
-				geo.setRequestedUpdateInterval(interval);
 				geo.requestPermission();
                 geo.addEventListener(StatusEvent.STATUS, geoStatusHandler);
 				geo.addEventListener(PermissionEvent.PERMISSION_STATUS,geoPermissionHandler);
 				geo.addEventListener(GeolocationEvent.UPDATE, geoUpdateHandler);
-				geo.locationAlwaysUsePermission = true;
 				logNtrace("locationAlwaysUsePermission(true)");
 				logNtrace("geo.locationAlwaysUsePermission() == " + geo.locationAlwaysUsePermission.toString());
             }
@@ -49,6 +48,10 @@
         {
 			logNtrace("Geolocation.permissionStatus == " + Geolocation.permissionStatus);
 		    logNtrace(event.formatToString("PermissionEvent","type","bubbles","cancelable","status"));
+			if(event.status == PermissionStatus.GRANTED) {
+				geo.setRequestedUpdateInterval(interval);
+				geo.locationAlwaysUsePermission = true;
+			}
         }
 
         public function geoStatusHandler(event:StatusEvent):void
